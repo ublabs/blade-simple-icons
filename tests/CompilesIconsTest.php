@@ -2,8 +2,8 @@
 
 namespace Ublabs\BladeSimpleIcons\Tests;
 
-use Orchestra\Testbench\TestCase;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use Orchestra\Testbench\TestCase;
 use Ublabs\BladeSimpleIcons\BladeSimpleIconsServiceProvider;
 
 class CompilesIconsTest extends TestCase
