@@ -1,13 +1,20 @@
+<h3 align="center">
+    Blade Simple Icons
+</h3>
+
 <p align="center">
-    <img src="https://github.com/ublabs/art/blob/main/socialcard/blade-simple-icons.png" width="1280" title="Social Card Blade Simple Icons">
+    <a href="https://github.com/ublabs/blade-simple-icons/actions?query=workflow%3ATests">
+        <img src="https://github.com/ublabs/blade-simple-icons/workflows/Tests/badge.svg" alt="Tests">
+    </a>
+    <a href="https://packagist.org/packages/ublabs/blade-simple-icons">
+        <img src="https://img.shields.io/packagist/v/ublabs/blade-simple-icons" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/ublabs/blade-simple-icons">
+        <img src="https://img.shields.io/packagist/dt/ublabs/blade-simple-icons" alt="Total Downloads">
+    </a>
 </p>
 
-# Blade Simple Icons
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ublabs/blade-simple-icons.svg?style=flat-square)](https://packagist.org/packages/ublabs/blade-simple-icons)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ublabs/blade-simple-icons/run-tests?label=tests)](https://github.com/ublabs/blade-simple-icons/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/ublabs/blade-simple-icons/Check%20&%20fix%20styling?label=code%20style)](https://github.com/ublabs/blade-simple-icons/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/ublabs/blade-simple-icons.svg?style=flat-square)](https://packagist.org/packages/ublabs/blade-simple-icons)
+---
 
 A package to easily make use of [Simple Icons](https://simpleicons.org/) in your Laravel Blade views.
 
