@@ -2,7 +2,7 @@
 
 All notable changes to `blade-simple-icons` will be documented in this file.
 
-## Unreleased - YYYY-MM-DD
+## 0.5.0 - 2021-07-15
 
 - update to 1.1.1 of Blade Icons for generator script
 - update to v5.6.0 of simple icons
