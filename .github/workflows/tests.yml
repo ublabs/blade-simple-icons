@@ -2,6 +2,8 @@ name: Tests
 
 on:
   push:
+    branches-ignore:
+      - feature/update-icons
   pull_request:
   schedule:
     - cron: '0 0 * * *'
