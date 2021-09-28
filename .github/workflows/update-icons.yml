@@ -29,6 +29,7 @@ jobs:
       - name: Update submodule
         uses: actions/checkout@v2
         with:
+          token: ${{ secrets.TOKEN_BOT }}
           repository: simple-icons/simple-icons
           ref: 'master'
           path: ./dist
@@ -39,12 +40,11 @@ jobs:
       - name: Generate icons
         run: composer run generate-icons
 
-      - name: Create commit
-        run: git add .
-
       - name: Push changes
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.TOKEN_BOT }}
+          author_email: ${{ secrets.BOT_EMAIL }}
+          author_name: ${{ secrets.BOT_NAME }}
           branch: feature/update-icons
           message: "feat(svg): update simple icons"
