@@ -5,18 +5,11 @@ on:
   schedule:
     - cron: 0 14 * * 0
 
-
 jobs:
-  update-submodules:
+  update:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [8.0]
-        laravel: [^8.0]
-
-    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
+    name: Update Simple Icons
 
     steps:
       - name: Checkout code
@@ -26,25 +19,64 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - id: current-version
+        name: Get current version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.version
+
+      - id: latest-version
+        name: Get latest Simple Icons version
+        uses: pozetroninc/github-action-get-latest-release@v0.5.0
+        with:
+          repository: simple-icons/simple-icons
+          excludes: prerelease, draft
+
+      - name: Add versions to environment
+        run: |
+          echo "CURRENT_VERSION=${{ steps.current-version.outputs.content }}" >> $GITHUB_ENV
+          echo "LATEST_VERSION=${{ steps.latest-version.outputs.release }}" >> $GITHUB_ENV
+
+      - name: Output versions
+        run: |
+          echo "Current release: ${{ env.CURRENT_VERSION }}"
+          echo "Latest release: ${{ env.LATEST_VERSION }}"
+
       - name: Update submodule
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.TOKEN_BOT }}
           repository: simple-icons/simple-icons
-          ref: 'master'
+          ref: ${{ env.LATEST_VERSION }}
           path: ./dist
 
+      - name: Setup PHP
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer
+          coverage: none
+
       - name: Install dependencies
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
         run: composer update --no-interaction --no-progress --dev
 
       - name: Generate icons
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
         run: composer run generate-icons
 
+      - name: Update version in ".version"
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
+        run: echo ${{ env.LATEST_VERSION }}>./.version
+
       - name: Push changes
+        if: env.CURRENT_VERSION != env.LATEST_VERSION
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.TOKEN_BOT }}
           author_email: ${{ secrets.BOT_EMAIL }}
           author_name: ${{ secrets.BOT_NAME }}
           branch: feature/update-icons
-          message: "feat(svg): update simple icons"
+          message: "feat(svg): update to Simple Icons v${{ env.LATEST_VERSION }}"

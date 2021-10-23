@@ -1,4 +1,0 @@
-[submodule "dist"]
-	path = dist
-	url = git@github.com:simple-icons/simple-icons.git
-	branch = master
