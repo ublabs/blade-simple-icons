@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use BladeUI\Icons\Generation\IconSetConfig;
 
 $svgNormalization = static function (string $tempFilepath, array $iconSet) {
     $fileLines = file_get_contents($tempFilepath);
@@ -9,10 +10,14 @@ $svgNormalization = static function (string $tempFilepath, array $iconSet) {
 };
 
 return [
-    [
-        'source' => __DIR__.'/../dist/icons',
-        'destination' => __DIR__.'/../resources/svg',
-        'after' => $svgNormalization,
-        'safe' => true,
-    ],
+    IconSetConfig::build(
+        __DIR__.'/../dist/icons',
+        __DIR__.'/../resources/svg',
+        '',
+        '',
+        '',
+        '',
+        true,
+        $svgNormalization,
+    ),
 ];
