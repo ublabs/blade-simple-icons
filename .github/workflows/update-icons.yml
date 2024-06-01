@@ -23,7 +23,7 @@ jobs:
         name: Get current version
         uses: juliangruber/read-file-action@v1
         with:
-          path: ./.version
+          path: ./version.json
 
       - id: latest-version
         name: Get latest Simple Icons version
@@ -34,7 +34,7 @@ jobs:
 
       - name: Add versions to environment
         run: |
-          echo "CURRENT_VERSION=${{ steps.current-version.outputs.content }}" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=${{ fromJSON(steps.current-version.outputs.content).current }}" >> $GITHUB_ENV
           echo "LATEST_VERSION=${{ steps.latest-version.outputs.release }}" >> $GITHUB_ENV
 
       - name: Output versions
@@ -67,9 +67,9 @@ jobs:
         if: env.CURRENT_VERSION != env.LATEST_VERSION
         run: composer run generate-icons
 
-      - name: Update version in ".version"
+      - name: Update version in "version.json"
         if: env.CURRENT_VERSION != env.LATEST_VERSION
-        run: echo ${{ env.LATEST_VERSION }}>./.version
+        run: echo '{ "current":"${{ env.LATEST_VERSION }}" }'>./version.json
 
       - name: Push changes
         if: env.CURRENT_VERSION != env.LATEST_VERSION
